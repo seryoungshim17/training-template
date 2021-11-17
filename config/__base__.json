@@ -1,18 +1,19 @@
 {
     "model": "BaseModel",
     "metric": "accuracy",
+    "num_class": 10,
 
     "hyperparam": {
         "epoch": 50,
         "batch": 8,
         "lr": 1e-5,
         "optimizer": {
-            "name": "adamW",
-            "weight_decay": 0.01
+            "name": "adam",
+            "weight_decay": 0
         },
         "loss": "cross_entropy"
     },
-    
+
     "log": {
         "model_dir": "../saved/models/",
         "wandb": {

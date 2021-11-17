@@ -1,5 +1,5 @@
-from init_project import JsonConfig
+from init_project import json_config
 
 if __name__ == '__main__':
-    cfg = JsonConfig(file_path='./config/__base__.json')
+    cfg = json_config(file_path='./config/__base__.json')
     print(cfg)
