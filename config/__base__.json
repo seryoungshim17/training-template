@@ -2,6 +2,7 @@
     "model": "BaseModel",
     "metric": "accuracy",
     "num_class": 10,
+    "valid_ratio": 0.2,
 
     "hyperparam": {
         "epoch": 50,
@@ -14,8 +15,24 @@
         "loss": "cross_entropy"
     },
 
+    "transform": [
+        {
+            "name": "GaussianBlur",
+            "args": {
+                "kernel_size": [3, 3]
+            }
+        },
+        {
+            "name": "RandomInvert",
+            "args": {
+                "p": 0.5
+            }
+        }
+    ],
+    "tta": [],
+
     "log": {
-        "model_dir": "../saved/models/",
+        "model_dir": "../saved/models/base/",
         "wandb": {
             "project": "base_project",
             "run_name": "base"

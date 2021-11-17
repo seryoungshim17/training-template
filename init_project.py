@@ -4,6 +4,7 @@ from models import loss
 from models import metrics
 from models import model
 from models import optimizer
+from custom_dataset import transformer
 # import wandb
 
 def json_config(file_path):
@@ -16,6 +17,9 @@ def json_config(file_path):
     cfg.metric = getattr(metrics, cfg.metric)
     
     cfg.optim = getattr(optimizer, cfg.hyperparam.optimizer.name)(cfg.model, cfg.hyperparam.lr, cfg.hyperparam.optimizer.weight_decay)
+    cfg.transform = transformer.config_to_transform(cfg.transform)
+    cfg.tta = transformer.config_to_transform(cfg.tta)
+    
     return cfg
 
 def wandb_init():

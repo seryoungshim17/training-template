@@ -7,8 +7,10 @@
 data/
 wandb/
 # Byte-compiled / optimized / DLL files
-__pycache__/
-__pycache__/*.py[cod]
+__pycache__/*
+*.py[co]
+*.pyc
+*$py.class
 
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
