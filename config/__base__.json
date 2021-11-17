@@ -1,0 +1,23 @@
+{
+    "model": "BaseModel",
+    "metric": "accuracy",
+
+    "hyperparam": {
+        "epoch": 50,
+        "batch": 8,
+        "lr": 1e-5,
+        "optimizer": {
+            "name": "adamW",
+            "weight_decay": 0.01
+        },
+        "loss": "cross_entropy"
+    },
+    
+    "log": {
+        "model_dir": "../saved/models/",
+        "wandb": {
+            "project": "base_project",
+            "run_name": "base"
+        }
+    }
+}
