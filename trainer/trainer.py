@@ -1,6 +1,7 @@
 import os
 from tqdm import tqdm
 import torch
+import wandb
 
 class Trainer():
     """
@@ -20,7 +21,7 @@ class Trainer():
         self.train_loader = train_loader
         self.valid_loader = valid_loader
 
-    def _train(self, num_classes, device, saved_folder, wandb=None):
+    def _train(self, num_classes, device, saved_folder, use_wandb=False):
         if not os.path.exists(saved_folder):
             os.makedirs(saved_folder)
         self.model = self.model.to(device)
@@ -47,6 +48,14 @@ class Trainer():
             ## Validation
             val_loss, val_acc = self._valid(e, device)
             # wandb log
+            if use_wandb:
+                wandb.log({
+                    'train/loss': round(epoch_loss/len(self.train_loader),4),
+                    'train/accuracy': round(epoch_acc/len(self.train_loader),4),
+                    'valid/loss': round(val_loss/len(self.valid_loader), 4),
+                    'valid/accuracy': round(val_acc/len(self.valid_loader), 4),
+                    'Learning Rate': self.optimizer.param_groups[0]['lr']
+                })
 
     def _valid(self, epoch, device):
         self.model.eval()
@@ -61,7 +70,7 @@ class Trainer():
                 val_loss += self.criterion(yhat, y_val.squeeze()).item()
                 acc = self.metric(yhat, y_val.squeeze())
                 val_acc += acc.item()
-        print(f"\n# Valid [Epoch {epoch}] Loss: {val_loss/len(self.train_loader):.04} | Acc: {val_acc/len(self.train_loader):.04}")
+        print(f"\n# Valid [Epoch {epoch}] Loss: {val_loss/len(self.valid_loader):.04} | Acc: {val_acc/len(self.valid_loader):.04}")
         return val_loss, val_acc
 
 

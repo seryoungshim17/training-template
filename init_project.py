@@ -5,7 +5,7 @@ from models import metrics
 from models import model
 from models import optimizer
 from custom_dataset import transformer
-# import wandb
+import wandb
 
 def json_config(file_path):
     cfg = EasyDict()
@@ -22,5 +22,17 @@ def json_config(file_path):
     
     return cfg
 
-def wandb_init():
-    return
+def wandb_init(cfg):
+    if 'id' in cfg.log.wandb:
+        id = cfg.log.wandb.id
+    else:
+        id = wandb.util.generate_id()
+        cfg.id = id
+    wandb.init(
+        project=cfg.log.wandb.project,
+        id = id,
+        resume="allow",
+        config=cfg
+    )
+    wandb.run.name = cfg.log.wandb.run_name
+    wandb.run.save()
