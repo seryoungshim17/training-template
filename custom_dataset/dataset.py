@@ -18,7 +18,7 @@ class CustomImageDataset(Dataset):
             for dir_name in dirs:
                 for file in os.listdir(os.path.join(img_dir, dir_name)):
                     self.image_paths.append(os.path.join(img_dir, dir_name, file))
-                    self.labels.append(dir_name)
+                    self.labels.append(int(dir_name))
 
     def __len__(self):
         return len(self.labels)
@@ -26,7 +26,7 @@ class CustomImageDataset(Dataset):
     def __getitem__(self, idx):
         image = self.transform(Image.open(self.image_paths[idx]))
 
-        return image, self.label[idx]
+        return image, self.labels[idx]
 
 if __name__ == '__main__':
     train_dataset = CustomImageDataset('../data/mnist_png/training')

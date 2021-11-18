@@ -12,7 +12,7 @@ def json_config(file_path):
     with open(file_path, 'r') as f:
         cfg.update(json.load(f))
 
-    cfg.model = getattr(model, cfg.model)(cfg.num_class)
+    cfg.model = getattr(model, cfg.model)(cfg.num_classes)
     cfg.loss = getattr(loss, cfg.hyperparam.loss)
     cfg.metric = getattr(metrics, cfg.metric)
     

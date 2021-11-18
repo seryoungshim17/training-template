@@ -1,12 +1,13 @@
 {
     "model": "BaseModel",
     "metric": "accuracy",
-    "num_class": 10,
+    "num_classes": 10,
     "valid_ratio": 0.2,
 
     "hyperparam": {
-        "epoch": 50,
+        "epoch": 1,
         "batch": 8,
+        "num_workers":1,
         "lr": 1e-5,
         "optimizer": {
             "name": "adam",
@@ -32,7 +33,7 @@
     "tta": [],
 
     "log": {
-        "model_dir": "../saved/models/base/",
+        "model_dir": "./saved/models/base/",
         "wandb": {
             "project": "base_project",
             "run_name": "base"
