@@ -1,16 +1,11 @@
-# Created by https://www.toptal.com/developers/gitignore/api/python,linux,jupyternotebooks,windows,macos,visualstudio,visualstudiocode,pycharm
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,linux,jupyternotebooks,windows,macos,visualstudio,visualstudiocode,pycharm
-
-### JupyterNotebooks ###
-# gitignore template for Jupyter Notebooks
-# website: http://jupyter.org/
-data/*
-wandb/
 # Byte-compiled / optimized / DLL files
 __pycache__/*
 *.py[co]
 *.pyc
 *$py.class
+
+data/
+wandb/
 
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
