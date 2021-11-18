@@ -6,7 +6,7 @@
 
     "hyperparam": {
         "epoch": 1,
-        "batch": 8,
+        "batch": 128,
         "num_workers":1,
         "lr": 1e-5,
         "optimizer": {

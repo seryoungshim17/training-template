@@ -29,7 +29,7 @@ class Trainer():
             epoch_loss = 0
             epoch_acc = 0
             self.model.train()
-            for (X_batch, y_batch) in tqdm(self.train_loader, desc=f"Epoch {e}"):
+            for batch_idx, (X_batch, y_batch) in enumerate(self.train_loader):
                 X_batch, y_batch = X_batch.to(device), y_batch.to(device)
 
                 self.optimizer.zero_grad()        
@@ -42,23 +42,35 @@ class Trainer():
                 self.optimizer.step()
 
                 epoch_loss += loss.item()
-                epoch_acc += acc
-            print(epoch_loss, epoch_acc)
+                epoch_acc += acc.item()
+                print(self._progress(e, batch_idx, len(self.train_loader),loss), end='\r')
             ## Validation
+            val_loss, val_acc = self._valid(e, device)
+            # wandb log
 
-    def _valid(self):
-        pass
+    def _valid(self, epoch, device):
+        self.model.eval()
+        with torch.no_grad(): 
+            val_loss = 0
+            val_acc = 0
+            for x_val, y_val in self.valid_loader:  
+                x_val = x_val.to(device)  
+                y_val = y_val.to(device)   
 
-    def _progress(self, batch_idx):
+                yhat = self.model(x_val)  
+                val_loss += self.criterion(yhat, y_val.squeeze()).item()
+                acc = self.metric(yhat, y_val.squeeze())
+                val_acc += acc.item()
+        print(f"\n# Valid [Epoch {epoch}] Loss: {val_loss/len(self.train_loader):.04} | Acc: {val_acc/len(self.train_loader):.04}")
+        return val_loss, val_acc
+
+
+    def _progress(self, epoch, batch_idx, iter_len, loss):
         """
         args
+            epoch: current epoch
             batch_idx: batch index
+            loss: current epoch's loss
         """
-        base = '[{}/{} ({:.0f}%)]'
-        if hasattr(self.data_loader, 'n_samples'):
-            current = batch_idx * self.data_loader.batch_size
-            total = self.data_loader.n_samples
-        else:
-            current = batch_idx
-            total = self.len_epoch
-        return base.format(current, total, 100.0 * current / total)
+        base = '[Epoch {}/{}] ({}/{} iters) loss: {:.04}'
+        return base.format(epoch, self.epochs, batch_idx, iter_len, loss)
