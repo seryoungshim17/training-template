@@ -4,7 +4,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 
 class CustomImageDataset(Dataset):
-    def __init__(self, img_dir, transform=None, target_transform=None, train=True):
+    def __init__(self, img_dir, transform=None, target_transform=None, train=True, mode=False):
         assert os.path.exists(img_dir)
         self.transform = transform
         self.target_transform = target_transform
@@ -19,6 +19,8 @@ class CustomImageDataset(Dataset):
                 for file in os.listdir(os.path.join(img_dir, dir_name)):
                     self.image_paths.append(os.path.join(img_dir, dir_name, file))
                     self.labels.append(int(dir_name))
+                    if mode:
+                        break
 
     def __len__(self):
         return len(self.labels)

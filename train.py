@@ -9,8 +9,8 @@ if __name__ == '__main__':
     DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     ## Prepare dataset
-    train_dataset = CustomImageDataset('./data/mnist_png/training/', cfg.transform, cfg.tta, train=True)
-    valid_dataset = CustomImageDataset('./data/mnist_png/testing/', cfg.transform, cfg.tta, train=True)
+    train_dataset = CustomImageDataset('./data/mnist_png/training/', cfg.transform, cfg.tta, train=True, mode=True)
+    valid_dataset = CustomImageDataset('./data/mnist_png/testing/', cfg.transform, cfg.tta, train=True, mode=True)
     # train_set, val_set = torch.utils.data.random_split(dataset, [50000, 10000])
 
     # Dataloader
