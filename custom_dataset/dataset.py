@@ -4,7 +4,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 
 class CustomImageDataset(Dataset):
-    def __init__(self, img_dir, transform=None, target_transform=None):
+    def __init__(self, img_dir, transform=None, target_transform=None, train=True):
         assert os.path.exists(img_dir)
         self.transform = transform
         self.target_transform = target_transform

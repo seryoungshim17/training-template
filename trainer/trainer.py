@@ -6,7 +6,7 @@ class Trainer():
         _train : train model
         _valid : validate model
     """
-    def __init__(self):
+    def __init__(self, cfg):
         pass
 
     def _train(self):
