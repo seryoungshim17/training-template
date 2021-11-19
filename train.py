@@ -1,4 +1,4 @@
-from init_project import json_config
+from init_project import json_config, wandb_init
 from custom_dataset.dataset import CustomImageDataset
 from trainer.trainer import Trainer
 import torch
@@ -19,6 +19,10 @@ if __name__ == '__main__':
     valid_loader = DataLoader(valid_dataset, batch_size=cfg.hyperparam.batch, shuffle=False, 
                                 num_workers=cfg.hyperparam.num_workers, drop_last=False)
 
+    ## WandB Init
+    if 'wandb' in cfg.log:
+        wandb_init(cfg)
+
     ## Start training
     T = Trainer(cfg, train_loader, valid_loader)
-    T._train(cfg.num_classes, DEVICE, cfg.log.model_dir)
+    T._train(cfg.num_classes, DEVICE, cfg.log.model_dir, 'wandb' in cfg.log)
