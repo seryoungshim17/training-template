@@ -8,7 +8,7 @@ from custom_dataset import transformer
 import torch
 import numpy as np
 import random
-# import wandb
+import wandb
 
 def json_config(file_path):
     cfg = EasyDict()
@@ -34,5 +34,17 @@ def init_seed(random_seed = 2021):
     np.random.seed(random_seed)
     random.seed(random_seed)
 
-def wandb_init():
-    return
+def wandb_init(cfg):
+    if 'id' in cfg.log.wandb:
+        id = cfg.log.wandb.id
+    else:
+        id = wandb.util.generate_id()
+        cfg.id = id
+    wandb.init(
+        project=cfg.log.wandb.project,
+        id = id,
+        resume="allow",
+        config=cfg
+    )
+    wandb.run.name = cfg.log.wandb.run_name
+    wandb.run.save()
