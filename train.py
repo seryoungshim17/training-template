@@ -1,11 +1,10 @@
-from init_project import json_config, wandb_init
+from init_project import json_config, wandb_init, init_seed
 from custom_dataset.dataset import CustomImageDataset
 from trainer.trainer import Trainer
 import torch
 from torch.utils.data import DataLoader
 import argparse
 import pathlib
-from init_project import init_seed
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='config file path')
