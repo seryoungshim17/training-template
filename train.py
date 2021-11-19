@@ -5,6 +5,7 @@ import torch
 from torch.utils.data import DataLoader
 import argparse
 import pathlib
+from init_project import init_seed
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='config file path')
@@ -16,6 +17,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     cfg = json_config(file_path=args.config)
+    init_seed(cfg.seed)
     DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     ## Prepare dataset
