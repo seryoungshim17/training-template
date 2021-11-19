@@ -3,6 +3,7 @@
     "metric": "accuracy",
     "num_classes": 10,
     "valid_ratio": 0.2,
+    "seed": 2021,
 
     "hyperparam": {
         "epoch": 1,

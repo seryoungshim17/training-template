@@ -1,11 +1,22 @@
-from init_project import json_config, wandb_init
+from init_project import json_config, wandb_init, init_seed
 from custom_dataset.dataset import CustomImageDataset
 from trainer.trainer import Trainer
 import torch
 from torch.utils.data import DataLoader
+import argparse
+import pathlib
 
 if __name__ == '__main__':
-    cfg = json_config(file_path='./config/__base__.json')
+    parser = argparse.ArgumentParser(description='config file path')
+    parser.add_argument(
+        '--config', 
+        type=pathlib.Path,
+        default='./config/__base__.json'
+    )
+    args = parser.parse_args()
+
+    cfg = json_config(file_path=args.config)
+    init_seed(cfg.seed)
     DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     ## Prepare dataset
