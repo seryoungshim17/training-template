@@ -56,6 +56,13 @@ class Trainer():
                     'valid/accuracy': round(val_acc/len(self.valid_loader), 4),
                     'Learning Rate': self.optimizer.param_groups[0]['lr']
                 })
+            self.best_weight = {
+                'epoch': e,
+                'model_state_dict': self.model.state_dict(),
+                'optimizer_state_dict': self.optimizer.state_dict(),
+                'loss': val_loss,
+            }
+            torch.save(self.best_weight, f"{saved_folder}/{e:03}_{val_loss/len(self.valid_loader):.2f}_{val_acc/len(self.valid_loader):.2f}.pt")
 
     def _valid(self, epoch, device):
         self.model.eval()
