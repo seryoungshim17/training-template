@@ -1,21 +1,23 @@
 from easydict import EasyDict
 import json
-from models import loss
-from models import metrics
-from models import model
-from models import optimizer
+from src import loss
+from src import metrics
+from src import models
+from src import optimizer
 from custom_dataset import transformer
 import torch
 import numpy as np
 import random
 import wandb
+from importlib import import_module
 
 def json_config(file_path):
     cfg = EasyDict()
     with open(file_path, 'r') as f:
         cfg.update(json.load(f))
 
-    cfg.model = getattr(model, cfg.model)(cfg.num_classes)
+    # cfg.model = getattr(models, cfg.model)(cfg.num_classes)
+    cfg.model = getattr(import_module("src.models."+cfg.model.split('.')[0]), cfg.model.split('.')[1])(cfg.num_classes)
     cfg.loss = getattr(loss, cfg.hyperparam.loss)
     cfg.metric = getattr(metrics, cfg.metric)
     

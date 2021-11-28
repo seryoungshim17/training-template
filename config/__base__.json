@@ -1,5 +1,5 @@
 {
-    "model": "BaseModel",
+    "model": "model.BaseModel",
     "metric": "accuracy",
     "num_classes": 10,
     "valid_ratio": 0.2,

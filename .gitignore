@@ -6,7 +6,7 @@ __pycache__/*
 
 data/
 wandb/
-*.pt
+saved/
 
 .ipynb_checkpoints
 */.ipynb_checkpoints/*

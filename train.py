@@ -1,6 +1,6 @@
 from init_project import json_config, wandb_init, init_seed
 from custom_dataset.dataset import CustomImageDataset
-from trainer.trainer import Trainer
+from src.trainer import Trainer
 import torch
 from torch.utils.data import DataLoader
 import argparse
